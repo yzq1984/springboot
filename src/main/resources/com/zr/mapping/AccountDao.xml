@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zr.dao.AccountDao">
+  <resultMap id="BaseResultMap" type="com.zr.model.Account">
+    <id column="cardid" jdbcType="VARCHAR" property="cardid" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="balance" jdbcType="DOUBLE" property="balance" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    cardid, password, username, balance
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_account
+    where cardid = #{cardid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_account
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_account
+    where cardid = #{cardid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zr.model.Account">
+    insert into t_account (cardid, password, username, 
+      balance)
+    values (#{cardid,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
+      #{balance,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zr.model.Account">
+    insert into t_account
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cardid != null">
+        cardid,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="balance != null">
+        balance,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cardid != null">
+        #{cardid,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="balance != null">
+        #{balance,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zr.model.Account">
+    update t_account
+    <set>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="balance != null">
+        balance = #{balance,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where cardid = #{cardid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zr.model.Account">
+    update t_account
+    set password = #{password,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      balance = #{balance,jdbcType=DOUBLE}
+    where cardid = #{cardid,jdbcType=VARCHAR}
+  </update>
+</mapper>
